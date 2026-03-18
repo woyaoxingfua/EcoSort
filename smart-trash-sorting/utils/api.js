@@ -3,6 +3,8 @@
 // 未配置时默认使用 localhost（适合开发者工具）
 const API_BASE_URL_STORAGE_KEY = 'apiBaseUrl';
 const DEFAULT_API_BASE_URL = 'http://localhost:3000/api';
+// const DEFAULT_API_BASE_URL = 'http://172.20.224.1:3000/api';
+// const DEFAULT_API_BASE_URL = 'http://172.20.10.13:3000/api';
 
 const normalizeApiBaseUrl = (rawUrl) => {
   if (typeof rawUrl !== 'string') return '';

@@ -61,3 +61,6 @@ er_step1.png
 
 # WeChat cloudbase debug
 .cloudbase/
+
+# SQL dumps
+*.sql
