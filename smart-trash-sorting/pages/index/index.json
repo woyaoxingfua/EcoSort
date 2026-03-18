@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "智能垃圾分类",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

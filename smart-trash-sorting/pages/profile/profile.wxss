@@ -1,0 +1,381 @@
+/* pages/profile/profile.wxss */
+
+.user-card {
+  background: linear-gradient(135deg, #07c160 0%, #05a050 100%);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255,255,255,0.3);
+  margin-right: 24rpx;
+}
+
+.user-avatar.default {
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60rpx;
+  border: none;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.user-level {
+  display: block;
+  font-size: 26rpx;
+  opacity: 0.9;
+  background: rgba(255,255,255,0.2);
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+}
+
+.user-level-badge {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  background: rgba(255,255,255,0.2);
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  display: inline-flex;
+}
+
+.level-icon {
+  font-size: 28rpx;
+}
+
+.level-text {
+  font-size: 26rpx;
+}
+
+/* 登录按钮 */
+.login-btn {
+  display: inline;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+}
+
+.login-btn::after {
+  border: none;
+}
+
+/* ========== 微信授权登录弹窗 ========== */
+.auth-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.auth-content {
+  position: relative;
+  background: #fff;
+  border-radius: 24rpx;
+  width: 620rpx;
+  overflow: hidden;
+  z-index: 1001;
+  animation: authSlideUp 0.3s ease-out;
+}
+
+@keyframes authSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 弹窗头部 */
+.auth-header {
+  padding: 50rpx 40rpx 30rpx;
+  text-align: center;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.auth-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.auth-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 表单项 */
+.auth-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.auth-label {
+  width: 120rpx;
+  font-size: 32rpx;
+  color: #333;
+}
+
+/* 头像选择 */
+.avatar-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  border: none;
+  line-height: normal;
+}
+
+.avatar-wrapper::after {
+  border: none;
+}
+
+.auth-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  margin-right: 16rpx;
+  background: #f5f5f5;
+}
+
+.auth-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+/* 昵称输入 */
+.auth-input {
+  flex: 1;
+  height: 60rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: right;
+}
+
+.auth-input::placeholder {
+  color: #999;
+}
+
+/* 提示文字 */
+.auth-tips {
+  padding: 30rpx 40rpx;
+  text-align: center;
+}
+
+.auth-tips text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 按钮区域 */
+.auth-btns {
+  display: flex;
+  border-top: 2rpx solid #f0f0f0;
+}
+
+.auth-btn {
+  flex: 1;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 32rpx;
+  border: none;
+  border-radius: 0;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-btn::after {
+  border: none;
+}
+
+.auth-btn.cancel {
+  color: #333;
+  border-right: 2rpx solid #f0f0f0;
+}
+
+.auth-btn.confirm {
+  color: #07c160;
+  font-weight: 600;
+}
+
+.auth-btn:active {
+  background: #f5f5f5;
+}
+
+/* 用户统计 */
+.user-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 30rpx;
+  border-top: 2rpx solid rgba(255,255,255,0.2);
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-num {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  display: block;
+  font-size: 26rpx;
+  opacity: 0.9;
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 60rpx;
+  background: rgba(255,255,255,0.2);
+}
+
+/* 菜单卡片 */
+.menu-card {
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-right: 20rpx;
+}
+
+.menu-name {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.menu-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+/* 分享按钮 */
+.share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  font-size: 30rpx;
+  color: #07c160;
+}
+
+.share-btn::after {
+  border: none;
+}
+
+.share-icon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+/* 退出登录 */
+.logout-btn {
+  text-align: center;
+  padding: 30rpx;
+  font-size: 30rpx;
+  color: #fa5151;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 清除数据 */
+.clear-data {
+  text-align: center;
+  padding: 30rpx;
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+}
+
+/* 版本信息 */
+.version-info {
+  text-align: center;
+  padding: 20rpx;
+  font-size: 24rpx;
+  color: #ccc;
+}

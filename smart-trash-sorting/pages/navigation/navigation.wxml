@@ -1,0 +1,103 @@
+<!--pages/navigation/navigation.wxml-->
+<view class="container">
+  <!-- 地图区域 -->
+  <view class="map-container">
+    <map 
+      id="recycleMap"
+      class="map"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      markers="{{markers}}"
+      show-location
+      bindmarkertap="onMarkerTap"
+    ></map>
+    
+    <!-- 定位按钮 -->
+    <view class="locate-btn" bindtap="locateCurrentPosition">
+      <text class="locate-icon">📍</text>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item {{currentFilter === item.id ? 'active' : ''}}" 
+          wx:for="{{filters}}" 
+          wx:key="id"
+          data-filter="{{item.id}}"
+          bindtap="filterPoints">
+      {{item.name}}
+    </view>
+  </view>
+
+  <!-- 回收点列表 -->
+  <scroll-view class="point-list" scroll-y>
+    <view class="list-title">附近回收点（{{recyclePoints.length}}个）</view>
+    <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+    <view wx:elif="{{recyclePoints.length === 0}}" class="empty-tip">附近暂无回收点</view>
+    <view class="point-item" wx:for="{{recyclePoints}}" wx:key="id" bindtap="onPointTap" data-point="{{item}}">
+      <view class="point-header">
+        <text class="point-icon">{{item.type === 'smart' ? '🤖' : item.type === 'hazardous' ? '☠️' : '♻️'}}</text>
+        <view class="point-info">
+          <text class="point-name">{{item.name}}</text>
+          <text class="point-address">{{item.address}}</text>
+        </view>
+        <text class="point-distance">{{item.distanceText}}</text>
+      </view>
+      <view class="point-meta">
+        <text class="point-tag" wx:for="{{item.types}}" wx:for-item="type" wx:key="type">{{type}}</text>
+      </view>
+      <view class="point-footer">
+        <text class="point-hours">⏰ {{item.hours}}</text>
+        <text class="point-phone" catchtap="makeCall" data-phone="{{item.phone}}">📞 联系</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 详情弹窗 -->
+  <view class="detail-popup" wx:if="{{showDetail}}" bindtap="closeDetail">
+    <view class="detail-content" catchtap="preventClose">
+      <view class="detail-header">
+        <text class="detail-title">{{selectedPoint.name}}</text>
+        <text class="detail-close" bindtap="closeDetail">✕</text>
+      </view>
+      
+      <view class="detail-body">
+        <view class="detail-row">
+          <text class="detail-label">📍 地址</text>
+          <text class="detail-value">{{selectedPoint.address}}</text>
+        </view>
+        
+        <view class="detail-row">
+          <text class="detail-label">📏 距离</text>
+          <text class="detail-value">{{selectedPoint.distanceText}}</text>
+        </view>
+        
+        <view class="detail-row">
+          <text class="detail-label">⏰ 营业时间</text>
+          <text class="detail-value">{{selectedPoint.hours}}</text>
+        </view>
+        
+        <view class="detail-row">
+          <text class="detail-label">📞 联系电话</text>
+          <text class="detail-value link" bindtap="makeCall" data-phone="{{selectedPoint.phone}}">{{selectedPoint.phone}}</text>
+        </view>
+        
+        <view class="detail-row">
+          <text class="detail-label">♻️ 回收类型</text>
+          <view class="detail-tags">
+            <text class="detail-tag" wx:for="{{selectedPoint.types}}" wx:key="*this">{{item}}</text>
+          </view>
+        </view>
+
+        <view class="detail-row" wx:if="{{selectedPoint.prices}}">
+          <text class="detail-label">💰 回收价格</text>
+          <text class="detail-value link" bindtap="viewPrices">点击查看 ></text>
+        </view>
+      </view>
+      
+      <view class="detail-footer">
+        <button class="btn btn-primary" bindtap="navigateToPoint">导航前往</button>
+      </view>
+    </view>
+  </view>
+</view>

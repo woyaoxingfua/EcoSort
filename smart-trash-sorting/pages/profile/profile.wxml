@@ -1,0 +1,138 @@
+<!--pages/profile/profile.wxml-->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-header">
+      <block wx:if="{{hasUserInfo}}">
+        <image class="user-avatar" src="{{userInfo.avatarUrl || userInfo.avatar_url || '/static/images/default-avatar.png'}}" mode="aspectFill" />
+        <view class="user-info">
+          <text class="user-name">{{userInfo.nickName || userInfo.nickname || '环保用户'}}</text>
+          <view class="user-level-badge" wx:if="{{userLevel}}">
+            <text class="level-icon">🌱</text>
+            <text class="level-text">{{userLevel.name}} Lv.{{userLevel.level}}</text>
+          </view>
+          <text class="user-level" wx:else>环保新手</text>
+        </view>
+      </block>
+      <block wx:else>
+        <!-- 未登录状态 -->
+        <view class="user-avatar default">👤</view>
+        <view class="user-info">
+          <button class="login-btn" bindtap="showLoginModal">点击登录</button>
+          <text class="user-level">登录后享受更多功能</text>
+        </view>
+      </block>
+    </view>
+    
+    <!-- 数据统计 -->
+    <view class="user-stats">
+      <view class="stat-item" bindtap="goToPoints">
+        <text class="stat-num">{{totalPoints}}</text>
+        <text class="stat-label">积分</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{checkInDays}}</text>
+        <text class="stat-label">打卡天数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{identifyCount}}</text>
+        <text class="stat-label">识别次数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item" bindtap="goToRanking">
+        <text class="stat-num">{{achievementCount}}</text>
+        <text class="stat-label">成就</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-card">
+    <view class="menu-item" wx:for="{{menuList}}" wx:key="id" bindtap="onMenuTap" data-id="{{item.id}}">
+      <view class="menu-icon" style="background: {{item.color}}20; color: {{item.color}}">{{item.icon}}</view>
+      <text class="menu-name">{{item.name}}</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 设置菜单 -->
+  <view class="menu-card">
+    <view class="menu-item" wx:for="{{settingsList}}" wx:key="id" bindtap="onSettingTap" data-id="{{item.id}}">
+      <view class="menu-icon" style="background: {{item.color}}20; color: {{item.color}}">{{item.icon}}</view>
+      <text class="menu-name">{{item.name}}</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 分享按钮 -->
+  <button class="share-btn" open-type="share">
+    <text class="share-icon">📤</text>
+    <text>分享给好友</text>
+  </button>
+
+  <!-- 退出登录 -->
+  <view class="logout-btn" wx:if="{{hasUserInfo}}" bindtap="logout">
+    <text>退出登录</text>
+  </view>
+
+  <!-- 清除数据 -->
+  <view class="clear-data" bindtap="clearData">
+    <text>清除本地数据</text>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text>智能垃圾分类 v1.0.0</text>
+  </view>
+
+  <!-- ========== 微信授权登录弹窗 ========== -->
+  <view class="auth-modal" wx:if="{{showLoginModal}}">
+    <view class="auth-mask" bindtap="closeLoginModal"></view>
+    <view class="auth-content">
+      <!-- 标题 -->
+      <view class="auth-header">
+        <text class="auth-title">申请获取以下信息</text>
+        <text class="auth-subtitle">完善你的账号信息</text>
+      </view>
+      
+      <!-- 头像选择 -->
+      <view class="auth-item">
+        <text class="auth-label">头像</text>
+        <button 
+          class="avatar-wrapper" 
+          open-type="chooseAvatar" 
+          bind:chooseavatar="onChooseAvatar"
+        >
+          <image class="auth-avatar" src="{{tempAvatarPreview || tempAvatarUrl || '/static/images/default-avatar.png'}}" mode="aspectFill" />
+          <text class="auth-arrow">></text>
+        </button>
+      </view>
+      
+      <!-- 昵称输入 -->
+      <view class="auth-item">
+        <text class="auth-label">昵称</text>
+        <input 
+          class="auth-input"
+          type="nickname"
+          placeholder="请输入昵称"
+          value="{{tempNickname}}"
+          bind:input="onNicknameInput"
+          bind:blur="onNicknameChange"
+        />
+      </view>
+      
+      <!-- 说明文字 -->
+      <view class="auth-tips">
+        <text>用于完善账号资料，提供更好的服务</text>
+      </view>
+      
+      <!-- 按钮 -->
+      <view class="auth-btns">
+        <button class="auth-btn cancel" bindtap="closeLoginModal">取消</button>
+        <button class="auth-btn confirm" bindtap="confirmLogin">允许</button>
+      </view>
+    </view>
+  </view>
+</view>

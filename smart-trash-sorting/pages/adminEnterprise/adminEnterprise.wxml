@@ -1,0 +1,234 @@
+<view class="container">
+  <view class="empty" wx:if="{{!canReview}}">
+    <text class="empty-icon">🔒</text>
+    <text class="empty-text">管理员登录后才能审核</text>
+    <button class="mini-btn" bindtap="goToEnterpriseLogin">去登录</button>
+  </view>
+
+  <view wx:else>
+    <view class="module-bar">
+      <view class="module-item {{activeModule === item.id ? 'active' : ''}}" wx:for="{{moduleTabs}}" wx:key="id" data-module="{{item.id}}" bindtap="switchModule">
+        {{item.name}}
+      </view>
+    </view>
+
+    <view wx:if="{{activeModule === 'enterprise'}}">
+      <view class="filter-card">
+        <view class="search-row">
+          <input class="search-input" placeholder="按企业名/账号/联系人搜索" value="{{enterpriseKeyword}}" bindinput="onEnterpriseKeywordInput" confirm-type="search" bindconfirm="searchEnterprise" />
+          <button class="mini-btn" bindtap="searchEnterprise">搜索</button>
+        </view>
+      </view>
+
+      <view class="tab-bar">
+        <view class="tab-item {{enterpriseStatus === item.id ? 'active' : ''}}" wx:for="{{enterpriseStatusTabs}}" wx:key="id" data-status="{{item.id}}" bindtap="switchEnterpriseStatus">
+          {{item.name}}
+        </view>
+      </view>
+
+      <view class="loading-text" wx:if="{{enterpriseLoading}}">加载中...</view>
+
+      <view class="list" wx:if="{{!enterpriseLoading && applications.length > 0}}">
+        <view class="item" wx:for="{{applications}}" wx:key="id">
+          <view class="item-header">
+            <text class="name">{{item.name}}</text>
+            <text class="status {{item.statusClass}}">{{item.statusText}}</text>
+          </view>
+          <view class="meta">账号：{{item.username || '未填写'}}</view>
+          <view class="meta">类型：{{item.type || '未填写'}}</view>
+          <view class="meta">联系人：{{item.contact_name || '未填写'}} {{item.phone || ''}}</view>
+          <view class="meta">地址：{{item.address || '未填写'}}</view>
+          <view class="meta">执照号：{{item.license_no || '未填写'}}</view>
+          <view class="time">提交时间：{{item.createdAtText}}</view>
+
+          <view class="review-actions" wx:if="{{item.verify_status === 'pending'}}">
+            <button class="review-btn pass" data-id="{{item.id}}" data-status="verified" bindtap="reviewApplication">通过</button>
+            <button class="review-btn reject" data-id="{{item.id}}" data-status="rejected" bindtap="reviewApplication">拒绝</button>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{!enterpriseLoading && applications.length === 0}}">
+        <text class="empty-icon">📄</text>
+        <text class="empty-text">暂无企业申请</text>
+      </view>
+    </view>
+
+    <view wx:if="{{activeModule === 'news'}}">
+      <view class="filter-card">
+        <view class="search-row">
+          <input class="search-input" placeholder="按标题/摘要/来源搜索" value="{{newsKeyword}}" bindinput="onNewsKeywordInput" confirm-type="search" bindconfirm="searchNews" />
+          <button class="mini-btn" bindtap="searchNews">搜索</button>
+          <button class="mini-btn" bindtap="openCreateNews">新增</button>
+        </view>
+      </view>
+
+      <!-- 内容类别切换 -->
+      <view class="section-title">内容类别</view>
+      <view class="tab-bar">
+        <view class="tab-item {{newsCategory === item.id ? 'active' : ''}}" wx:for="{{newsCategoryTabs}}" wx:key="id" data-category="{{item.id}}" bindtap="switchNewsCategory">
+          {{item.name}}
+        </view>
+      </view>
+
+      <view class="tab-bar">
+        <view class="tab-item {{newsStatus === item.id ? 'active' : ''}}" wx:for="{{newsStatusTabs}}" wx:key="id" data-status="{{item.id}}" bindtap="switchNewsStatus">
+          {{item.name}}
+        </view>
+      </view>
+
+      <!-- 新增/编辑表单 -->
+      <view class="form-card" wx:if="{{showNewsForm}}">
+        <view class="form-title">{{isEditingNews ? '编辑内容' : '新增内容'}}</view>
+
+        <!-- AI辅助生成区域 -->
+        <view class="ai-generate-box">
+          <view class="form-label">AI辅助生成</view>
+          <view class="search-row">
+            <input class="form-input" placeholder="输入主题关键词，如：塑料瓶回收" value="{{aiTopic}}" bindinput="onAiTopicInput" />
+            <button class="mini-btn ai-btn" bindtap="aiGenerateContent" loading="{{aiGenerating}}" disabled="{{aiGenerating}}">AI生成</button>
+          </view>
+        </view>
+
+        <!-- 内容类别选择 -->
+        <view class="form-label">内容类别</view>
+        <view class="inline-tabs">
+          <view class="inline-tab {{newsForm.category === 'news' ? 'active' : ''}}" data-category="news" bindtap="switchNewsFormCategory">环保资讯</view>
+          <view class="inline-tab {{newsForm.category === 'knowledge' ? 'active' : ''}}" data-category="knowledge" bindtap="switchNewsFormCategory">分类知识</view>
+          <view class="inline-tab {{newsForm.category === 'mistake' ? 'active' : ''}}" data-category="mistake" bindtap="switchNewsFormCategory">常见误区</view>
+          <view class="inline-tab {{newsForm.category === 'daily_tip' ? 'active' : ''}}" data-category="daily_tip" bindtap="switchNewsFormCategory">每日小知识</view>
+        </view>
+
+        <input class="form-input" placeholder="标题（必填）" data-field="title" value="{{newsForm.title}}" bindinput="onNewsFormInput" />
+        <textarea class="form-textarea" placeholder="摘要" data-field="summary" value="{{newsForm.summary}}" bindinput="onNewsFormInput" maxlength="500" />
+        <textarea class="form-textarea content" placeholder="内容" data-field="content" value="{{newsForm.content}}" bindinput="onNewsFormInput" maxlength="5000" />
+        <input class="form-input" placeholder="来源" data-field="source" value="{{newsForm.source}}" bindinput="onNewsFormInput" />
+        <input class="form-input" placeholder="作者" data-field="author" value="{{newsForm.author}}" bindinput="onNewsFormInput" />
+        <input class="form-input" placeholder="封面图URL（可选）" data-field="coverImage" value="{{newsForm.coverImage}}" bindinput="onNewsFormInput" />
+
+        <view class="form-label">发布状态</view>
+        <view class="inline-tabs">
+          <view class="inline-tab {{newsForm.status === 1 ? 'active' : ''}}" data-status="1" bindtap="switchNewsFormStatus">上架</view>
+          <view class="inline-tab {{newsForm.status === 0 ? 'active' : ''}}" data-status="0" bindtap="switchNewsFormStatus">下架</view>
+        </view>
+
+        <view class="form-actions">
+          <button class="mini-btn" bindtap="submitNewsForm" loading="{{newsSubmitting}}">{{isEditingNews ? '保存' : '新增'}}</button>
+          <button class="mini-btn danger" bindtap="closeNewsForm">取消</button>
+        </view>
+      </view>
+
+      <view class="loading-text" wx:if="{{newsLoading}}">加载中...</view>
+
+      <view class="list" wx:if="{{!newsLoading && newsList.length > 0}}">
+        <view class="item" wx:for="{{newsList}}" wx:key="id">
+          <view class="item-header">
+            <text class="name">{{item.title}}</text>
+            <text class="status {{item.statusClass}}">{{item.statusText}}</text>
+          </view>
+          <view class="meta" wx:if="{{item.summary}}">摘要：{{item.summary}}</view>
+          <view class="meta">来源：{{item.source || '未填写'}} / 作者：{{item.author || '未填写'}}</view>
+          <view class="meta">浏览次数：{{item.view_count || 0}}</view>
+          <view class="time">发布时间：{{item.publishedAtText || '未设置'}}</view>
+          <view class="time">更新时间：{{item.updatedAtText || '未更新'}}</view>
+
+          <view class="review-actions">
+            <button class="review-btn" data-id="{{item.id}}" bindtap="editNews">编辑</button>
+            <button class="review-btn {{item.status === 1 ? 'warn' : 'pass'}}" data-id="{{item.id}}" data-status="{{item.status}}" bindtap="toggleNewsStatus">{{item.status === 1 ? '下架' : '上架'}}</button>
+            <button class="review-btn reject" data-id="{{item.id}}" bindtap="deleteNews">删除</button>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{!newsLoading && newsList.length === 0}}">
+        <text class="empty-icon">📰</text>
+        <text class="empty-text">暂无资讯数据</text>
+      </view>
+    </view>
+
+    <view wx:if="{{activeModule === 'feedback'}}">
+      <view class="filter-card">
+        <view class="search-row">
+          <input class="search-input" placeholder="按内容/用户/联系方式搜索反馈" value="{{feedbackKeyword}}" bindinput="onFeedbackKeywordInput" confirm-type="search" bindconfirm="searchFeedback" />
+          <button class="mini-btn" bindtap="searchFeedback">搜索</button>
+        </view>
+      </view>
+
+      <view class="section-title">状态筛选</view>
+      <view class="tab-bar">
+        <view class="tab-item {{feedbackStatus === item.id ? 'active' : ''}}" wx:for="{{feedbackStatusTabs}}" wx:key="id" data-status="{{item.id}}" bindtap="switchFeedbackStatus">
+          {{item.name}}
+        </view>
+      </view>
+
+      <view class="section-title">类型筛选</view>
+      <view class="tab-bar">
+        <view class="tab-item {{feedbackType === item.id ? 'active' : ''}}" wx:for="{{feedbackTypeTabs}}" wx:key="id" data-type="{{item.id}}" bindtap="switchFeedbackType">
+          {{item.name}}
+        </view>
+      </view>
+
+      <view class="loading-text" wx:if="{{feedbackLoading}}">加载中...</view>
+
+      <view class="list" wx:if="{{!feedbackLoading && feedbackList.length > 0}}">
+        <view class="item" wx:for="{{feedbackList}}" wx:key="id">
+          <view class="item-header">
+            <text class="name">{{item.user_nickname || ('用户#' + item.user_id)}}</text>
+            <text class="status {{item.statusClass}}">{{item.statusText}}</text>
+          </view>
+          <view class="meta">类型：{{item.typeText}}</view>
+          <view class="meta" wx:if="{{item.trash_name}}">相关垃圾：{{item.trash_name}}</view>
+          <view class="meta" wx:if="{{item.contact}}">联系方式：{{item.contact}}</view>
+          <view class="content-box">{{item.content}}</view>
+          <view class="time">提交时间：{{item.createdAtText}}</view>
+
+          <textarea class="reply-input" placeholder="输入处理回复（可选）" value="{{replyDrafts[item.id]}}" data-id="{{item.id}}" bindinput="onReplyInput" maxlength="2000" />
+
+          <view class="review-actions">
+            <button class="review-btn pending" data-id="{{item.id}}" data-status="processing" bindtap="updateFeedbackStatus">处理中</button>
+            <button class="review-btn pass" data-id="{{item.id}}" data-status="resolved" bindtap="updateFeedbackStatus">已解决</button>
+            <button class="review-btn" data-id="{{item.id}}" bindtap="saveFeedbackReply">保存回复</button>
+            <button class="review-btn accept" data-id="{{item.id}}" bindtap="openAcceptTrashForm">采纳添加分类</button>
+          </view>
+
+          <view class="reply-box" wx:if="{{item.reply}}">
+            <text class="reply-title">当前回复：</text>
+            <text class="reply-text">{{item.reply}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{!feedbackLoading && feedbackList.length === 0}}">
+        <text class="empty-icon">💬</text>
+        <text class="empty-text">暂无反馈数据</text>
+      </view>
+
+      <!-- 采纳反馈 → 添加垃圾分类表单 -->
+      <view class="detail-modal" wx:if="{{showTrashForm}}" bindtap="closeTrashForm">
+        <view class="form-card trash-form-modal" catchtap="">
+          <view class="form-title">采纳反馈 - 添加垃圾分类</view>
+
+          <input class="form-input" placeholder="垃圾名称（必填）" data-field="name" value="{{trashForm.name}}" bindinput="onTrashFormInput" />
+
+          <view class="form-label">分类类型</view>
+          <view class="inline-tabs">
+            <view class="inline-tab {{trashForm.type === 'recyclable' ? 'active' : ''}}" data-type="recyclable" bindtap="switchTrashType">可回收物</view>
+            <view class="inline-tab {{trashForm.type === 'hazardous' ? 'active' : ''}}" data-type="hazardous" bindtap="switchTrashType">有害垃圾</view>
+            <view class="inline-tab {{trashForm.type === 'kitchen' ? 'active' : ''}}" data-type="kitchen" bindtap="switchTrashType">厨余垃圾</view>
+            <view class="inline-tab {{trashForm.type === 'other' ? 'active' : ''}}" data-type="other" bindtap="switchTrashType">其他垃圾</view>
+          </view>
+
+          <input class="form-input" placeholder="投放提示" data-field="tips" value="{{trashForm.tips}}" bindinput="onTrashFormInput" />
+          <input class="form-input" placeholder="图标emoji（默认🗑️）" data-field="icon" value="{{trashForm.icon}}" bindinput="onTrashFormInput" />
+          <input class="form-input" placeholder="示例物品（逗号分隔，如：瓶盖，笔帽）" data-field="examples" value="{{trashForm.examples}}" bindinput="onTrashFormInput" />
+          <textarea class="form-textarea" placeholder="描述说明" data-field="description" value="{{trashForm.description}}" bindinput="onTrashFormInput" maxlength="500" />
+
+          <view class="form-actions">
+            <button class="mini-btn" bindtap="submitTrashForm" loading="{{trashSubmitting}}">确认添加</button>
+            <button class="mini-btn danger" bindtap="closeTrashForm">取消</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

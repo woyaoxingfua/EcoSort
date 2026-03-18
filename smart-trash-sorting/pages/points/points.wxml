@@ -1,0 +1,136 @@
+<!--pages/points/points.wxml-->
+<view class="container">
+  <!-- 积分卡片 -->
+  <view class="points-card">
+    <view class="points-header">
+      <view class="points-info">
+        <text class="points-label">我的积分</text>
+        <text class="points-value">{{totalPoints}}</text>
+      </view>
+      <view class="checkin-info">
+        <text class="checkin-days">已打卡 {{checkInDays}} 天</text>
+        <view class="checkin-btn {{todayCheckedIn ? 'checked' : ''}}" bindtap="onCheckIn">
+          {{todayCheckedIn ? '已打卡' : '打卡'}}
+        </view>
+      </view>
+    </view>
+    
+    <!-- 连续打卡进度 -->
+    <view class="checkin-progress">
+      <view class="progress-days">
+        <view class="day-item {{checkInDays >= item ? 'active' : ''}}" wx:for="{{[1,2,3,4,5,6,7]}}" wx:key="*this">
+          <text class="day-circle">{{item}}</text>
+          <text class="day-reward">+{{item === 7 ? 50 : 10}}</text>
+        </view>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{(checkInDays / 7 * 100)}}%"></view>
+      </view>
+    </view>
+
+    <!-- 排行榜入口 -->
+    <view class="ranking-entry" bindtap="goToRanking">
+      <text class="ranking-icon">🏆</text>
+      <text class="ranking-text">查看排行榜</text>
+      <text class="ranking-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 标签切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.id ? 'active' : ''}}" 
+          wx:for="{{tabs}}" 
+          wx:key="id"
+          data-tab="{{item.id}}"
+          bindtap="switchTab">
+      {{item.name}}
+    </view>
+  </view>
+
+  <!-- 任务列表 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'tasks'}}">
+    <view class="task-item {{item.status}}" wx:for="{{tasks}}" wx:key="id" bindtap="doTask" data-task="{{item}}">
+      <view class="task-icon">{{item.icon}}</view>
+      <view class="task-content">
+        <view class="task-header">
+          <text class="task-name">{{item.name}}</text>
+          <text class="task-points">+{{item.points}}</text>
+        </view>
+        <text class="task-desc">{{item.desc}}</text>
+        <view class="task-progress" wx:if="{{item.progress}}">
+          <view class="progress-track">
+            <view class="progress-fill" style="width: {{item.progress.split('/')[0] / item.progress.split('/')[1] * 100}}%"></view>
+          </view>
+          <text class="progress-text">{{item.progress}}</text>
+        </view>
+      </view>
+      <view class="task-action">
+        <text class="action-btn {{item.status}}">
+          {{item.status === 'completed' ? '已完成' : item.status === 'locked' ? '未解锁' : '去完成'}}
+        </text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 兑换商城 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'exchange'}}">
+    <view class="exchange-tip">
+      <text class="exchange-tip-text">兑换成功后可在“记录”查看处理进度</text>
+      <text class="exchange-tip-link" bindtap="goToRecords">去查看 ></text>
+    </view>
+
+    <view class="prize-grid">
+      <view class="prize-item" wx:for="{{prizes}}" wx:key="id">
+        <view class="prize-icon">{{item.icon}}</view>
+        <text class="prize-name">{{item.name}}</text>
+        <text class="prize-desc">{{item.description || item.desc || '环保好物'}}</text>
+        <view class="prize-footer">
+          <text class="prize-points">{{item.points}}积分</text>
+          <button class="exchange-btn {{totalPoints >= item.points ? 'available' : ''}}" 
+                  bindtap="exchangePrize" 
+                  data-prize="{{item}}">兑换</button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 积分记录 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'records'}}">
+    <view wx:if="{{exchangeRecords.length > 0 || records.length > 0}}">
+      <view class="record-section" wx:if="{{exchangeRecords.length > 0}}">
+        <text class="record-section-title">兑换记录</text>
+        <view class="record-list">
+          <view class="record-item" wx:for="{{exchangeRecords}}" wx:key="id">
+            <view class="record-icon">{{item.prize_icon || '🎁'}}</view>
+            <view class="record-content">
+              <text class="record-reason">{{item.prize_name}}</text>
+              <text class="record-time">{{item.time}}</text>
+            </view>
+            <view class="exchange-meta">
+              <text class="record-points consume">-{{item.points}}</text>
+              <text class="exchange-status status-{{item.status}}">{{item.statusText}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="record-section" wx:if="{{records.length > 0}}">
+        <text class="record-section-title">积分流水</text>
+        <view class="record-list">
+          <view class="record-item {{item.type}}" wx:for="{{records}}" wx:key="id">
+            <view class="record-icon">{{item.type === 'add' ? '📈' : '📉'}}</view>
+            <view class="record-content">
+              <text class="record-reason">{{item.reason}}</text>
+              <text class="record-time">{{item.time}}</text>
+            </view>
+            <text class="record-points {{item.type}}">{{item.type === 'add' ? '+' : ''}}{{item.points}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无记录</text>
+    </view>
+  </scroll-view>
+</view>

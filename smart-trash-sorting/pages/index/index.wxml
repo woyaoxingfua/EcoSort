@@ -1,0 +1,109 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 用户信息和积分卡片 -->
+  <view class="card user-card">
+    <view class="user-info">
+      <image class="avatar" src="{{userInfo ? (userInfo.avatarUrl || userInfo.avatar_url || '/static/images/default-avatar.png') : '/static/images/default-avatar.png'}}" />
+      <view class="user-meta">
+        <text class="nickname">{{userInfo ? (userInfo.nickName || userInfo.nickname || '用户') : '点击登录'}}</text>
+        <view class="level-row" wx:if="{{userLevel}}">
+          <text class="level-badge">{{userLevel.name}} Lv.{{userLevel.level}}</text>
+          <view class="level-progress-bar">
+            <view class="level-progress-fill" style="width: {{levelProgress}}%"></view>
+          </view>
+        </view>
+        <text class="checkin-days" wx:else>已连续打卡 {{checkInDays}} 天</text>
+      </view>
+      <view class="checkin-btn {{todayCheckedIn ? 'checked' : ''}}" bindtap="onCheckIn">
+        <text class="checkin-icon">{{todayCheckedIn ? '✓' : '📅'}}</text>
+        <text>{{todayCheckedIn ? '已打卡' : '打卡'}}</text>
+      </view>
+    </view>
+    <view class="points-box">
+      <view class="points-item" bindtap="goToPoints">
+        <text class="points-num">{{totalPoints}}</text>
+        <text class="points-label">我的积分</text>
+      </view>
+      <view class="points-item" bindtap="goToRanking">
+        <text class="points-num">🏆</text>
+        <text class="points-label">排行榜</text>
+      </view>
+      <view class="points-item">
+        <text class="points-num">{{identifyCount}}</text>
+        <text class="points-label">累计分类</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷识别入口 -->
+  <view class="card identify-card">
+    <view class="card-title">智能识别</view>
+    <view class="identify-ways">
+      <view class="way-item" wx:for="{{identifyWays}}" wx:key="name" bindtap="goToIdentify" data-path="{{item.path}}">
+        <view class="way-icon">{{item.icon}}</view>
+        <text class="way-name">{{item.name}}</text>
+        <text class="way-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 垃圾分类速查 -->
+  <view class="card types-card">
+    <view class="card-title">垃圾分类速查</view>
+    <view class="types-grid">
+      <view class="type-item" wx:for="{{trashTypes}}" wx:key="name" bindtap="showTypeDetail" data-index="{{index}}">
+        <view class="type-icon" style="background: {{item.color}}20; color: {{item.color}}">
+          {{item.icon}}
+        </view>
+        <text class="type-name" style="color: {{item.color}}">{{item.name}}</text>
+        <text class="type-desc">{{item.desc}}</text>
+        <view class="type-examples">
+          <text wx:for="{{item.examples}}" wx:for-item="ex" wx:key="ex">{{ex}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 热门搜索 -->
+  <view class="card hot-card">
+    <view class="card-title">热门搜索</view>
+    <view class="hot-list">
+      <view class="hot-item" wx:for="{{hotItems}}" wx:key="name" bindtap="onHotItemTap" data-item="{{item}}">
+        <text class="hot-icon">{{item.icon}}</text>
+        <text class="hot-name">{{item.name}}</text>
+        <text class="hot-tag tag-{{item.type === '可回收物' ? 'recyclable' : item.type === '有害垃圾' ? 'hazardous' : item.type === '厨余垃圾' ? 'kitchen' : 'other'}}">{{item.type}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 环保资讯 -->
+  <view class="card news-card">
+    <view class="card-title">
+      <text>环保资讯</text>
+      <text class="more" bindtap="onMoreNews">更多 ></text>
+    </view>
+    <view class="news-list">
+      <view class="news-item" wx:for="{{envNews}}" wx:key="id" bindtap="onNewsTap" data-item="{{item}}">
+        <view class="news-content">
+          <text class="news-title">{{item.title}}</text>
+          <view class="news-meta">
+            <text class="news-source">{{item.source}}</text>
+            <text class="news-date">{{item.date}}</text>
+          </view>
+        </view>
+        <text class="news-arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 环保小贴士（优先从数据库加载，兜底显示默认文案） -->
+  <view class="card eco-tips-card">
+    <view class="eco-tips-content">
+      <text class="eco-tips-icon">🌍</text>
+      <view class="eco-tips-text">
+        <text class="eco-tips-title">{{dailyTip.title || '每日环保小知识'}}</text>
+        <text class="eco-tips-desc">{{dailyTip.content || '一只塑料瓶需要450年才能完全降解，回收一吨废纸可以少砍17棵大树。让我们一起行动，从垃圾分类做起！'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

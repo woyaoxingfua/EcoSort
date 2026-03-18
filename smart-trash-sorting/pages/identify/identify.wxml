@@ -1,0 +1,78 @@
+<!--pages/identify/identify.wxml-->
+<view class="container">
+  <!-- 选项卡 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.id ? 'active' : ''}}" 
+          wx:for="{{tabs}}" 
+          wx:key="id"
+          data-tab="{{item.id}}"
+          bindtap="switchTab">
+      <text class="tab-icon">{{item.icon}}</text>
+      <text class="tab-name">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 识别方式展示（仅在非历史标签时显示） -->
+  <view class="card identify-options" wx:if="{{activeTab !== 'history'}}">
+    <view class="option-item" bindtap="takePhoto">
+      <view class="option-icon primary">📷</view>
+      <view class="option-content">
+        <text class="option-title">拍照识别</text>
+        <text class="option-desc">对准垃圾物品拍照，AI智能识别</text>
+      </view>
+      <text class="option-arrow">></text>
+    </view>
+    
+    <view class="divider"></view>
+    
+    <view class="option-item" bindtap="chooseFromAlbum">
+      <view class="option-icon secondary">🖼️</view>
+      <view class="option-content">
+        <text class="option-title">相册选择</text>
+        <text class="option-desc">从相册选择图片进行识别</text>
+      </view>
+      <text class="option-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 识别历史（动态数据） -->
+  <view class="card history-card">
+    <view class="card-title">
+      <text>最近识别</text>
+      <text class="clear-btn" bindtap="clearHistory" wx:if="{{historyList.length > 0}}">清空</text>
+    </view>
+    
+    <!-- 有历史记录 -->
+    <view class="history-list" wx:if="{{historyList.length > 0}}">
+      <view class="history-item" wx:for="{{historyList}}" wx:key="id" bindtap="onHistoryTap" data-item="{{item}}">
+        <text class="history-icon">{{item.icon}}</text>
+        <view class="history-info">
+          <text class="history-name">{{item.name}}</text>
+          <text class="history-tag" style="background: {{item.color}}">{{item.typeName}}</text>
+        </view>
+        <view class="history-right">
+          <text class="history-confidence" wx:if="{{item.confidence}}">{{item.confidence}}%</text>
+          <text class="history-time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无历史记录 -->
+    <view class="empty-history" wx:else>
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无识别记录</text>
+      <text class="empty-hint">试试拍照识别或文字搜索</text>
+    </view>
+  </view>
+
+  <!-- 识别提示 -->
+  <view class="tips-card">
+    <view class="tips-title">💡 识别小贴士</view>
+    <view class="tips-list">
+      <text class="tip-item">• 拍照时请确保光线充足</text>
+      <text class="tip-item">• 尽量将垃圾物品放在画面中央</text>
+      <text class="tip-item">• 避免背景过于杂乱</text>
+      <text class="tip-item">• 对于复杂物品可尝试多角度拍摄</text>
+    </view>
+  </view>
+</view>

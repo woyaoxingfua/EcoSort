@@ -1,0 +1,118 @@
+<!--pages/exchange/exchange.wxml-->
+<view class="container">
+  <!-- 标签栏 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.id ? 'active' : ''}}"
+          wx:for="{{tabs}}"
+          wx:key="id"
+          data-tab="{{item.id}}"
+          bindtap="switchTab">
+      {{item.name}}
+    </view>
+  </view>
+
+  <!-- 待核销列表 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'pending'}}">
+    <view wx:if="{{exchanges.pending.length > 0}}">
+      <view class="exchange-card" wx:for="{{exchanges.pending}}" wx:key="id" bindtap="showExchangeDetail" data-item="{{item}}">
+        <view class="card-header">
+          <text class="prize-icon">{{item.prize_icon || '🎁'}}</text>
+          <view class="card-info">
+            <text class="prize-name">{{item.prize_name}}</text>
+            <text class="status pending">{{item.statusText}}</text>
+          </view>
+          <text class="arrow">></text>
+        </view>
+        <view class="card-footer">
+          <text class="price">-{{item.points}}积分</text>
+          <text class="time">{{item.time}}</text>
+        </view>
+      </view>
+
+      <!-- 核销提示 -->
+      <view class="tip-card">
+        <text class="tip-icon">💡</text>
+        <text class="tip-text">点击查看凭证码，联系企业核销您的奖品</text>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">🎁</text>
+      <text class="empty-text">还没有待核销的兑换</text>
+      <text class="empty-hint">去积分中心兑换好礼吧</text>
+    </view>
+  </scroll-view>
+
+  <!-- 已核销列表 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'completed'}}">
+    <view wx:if="{{exchanges.completed.length > 0}}">
+      <view class="exchange-card completed" wx:for="{{exchanges.completed}}" wx:key="id">
+        <view class="card-header">
+          <text class="prize-icon">{{item.prize_icon || '🎁'}}</text>
+          <view class="card-info">
+            <text class="prize-name">{{item.prize_name}}</text>
+            <text class="status completed">✓ 已完成</text>
+          </view>
+        </view>
+        <view class="card-footer">
+          <text class="price">-{{item.points}}积分</text>
+          <text class="time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">还没有已核销的兑换</text>
+    </view>
+  </scroll-view>
+
+  <!-- 详情模态框 -->
+  <view class="modal" wx:if="{{showDetail}}">
+    <view class="modal-mask" bindtap="closeDetail"></view>
+    <view class="modal-content">
+      <!-- 关闭按钮 -->
+      <view class="modal-close" bindtap="closeDetail">✕</view>
+
+      <!-- 奖品信息 -->
+      <view class="detail-section">
+        <text class="section-title">奖品信息</text>
+        <view class="info-row">
+          <text class="label">名称</text>
+          <text class="value">{{selectedExchange.prize_name}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">积分</text>
+          <text class="value">{{selectedExchange.points}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">兑换时间</text>
+          <text class="value">{{selectedExchange.time}}</text>
+        </view>
+      </view>
+
+      <!-- 凭证信息 -->
+      <view class="detail-section" wx:if="{{selectedExchange.status === 'pending'}}">
+        <text class="section-title">核销凭证</text>
+        <view class="voucher-box">
+          <text class="voucher-code">{{selectedExchange.voucherCode}}</text>
+          <text class="copy-btn" bindtap="copyVoucherCode">复制</text>
+        </view>
+        <text class="voucher-hint">出示此凭证码给企业进行核销</text>
+      </view>
+
+      <!-- 收货地址 -->
+      <view class="detail-section" wx:if="{{selectedExchange.address}}">
+        <text class="section-title">收货地址</text>
+        <text class="address-text">{{selectedExchange.address}}</text>
+      </view>
+
+      <!-- 核销按钮 -->
+      <view class="action-buttons" wx:if="{{selectedExchange.status === 'pending'}}">
+        <button class="btn-secondary" bindtap="findNearbyEnterprises">查找附近企业</button>
+        <button class="btn-primary" bindtap="scanToRedeem">扫码核销</button>
+      </view>
+
+      <!-- 分享按钮 -->
+      <button class="btn-share" open-type="share">📤 分享给好友</button>
+    </view>
+  </view>
+</view>

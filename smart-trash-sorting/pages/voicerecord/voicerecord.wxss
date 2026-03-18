@@ -1,0 +1,278 @@
+/* pages/voicerecord/voicerecord.wxss */
+
+.record-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+}
+
+.voice-wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200rpx;
+  gap: 8rpx;
+}
+
+.wave-bar {
+  width: 8rpx;
+  background: #07c160;
+  border-radius: 4rpx;
+  animation: wave 0.5s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1); }
+}
+
+.voice-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.record-tip {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.record-time {
+  font-size: 48rpx;
+  color: #07c160;
+  font-weight: 600;
+  margin-top: 20rpx;
+}
+
+/* 结果卡片 */
+.result-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  animation: slideUp 0.4s ease;
+}
+
+.voice-text-section {
+  margin-bottom: 30rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.section-label {
+  font-size: 28rpx;
+  color: #999;
+  margin-right: 16rpx;
+}
+
+.voice-text {
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.search-result {
+  text-align: center;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+}
+
+.result-icon {
+  font-size: 80rpx;
+  margin-right: 24rpx;
+}
+
+.result-info {
+  text-align: left;
+}
+
+.result-name {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.result-tag {
+  display: inline-block;
+  color: #fff;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+}
+
+.result-tips {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 30rpx;
+  line-height: 1.6;
+}
+
+/* 其他相关结果 */
+.other-results {
+  margin: 30rpx 0;
+  padding-top: 30rpx;
+  border-top: 2rpx solid #f0f0f0;
+  text-align: left;
+}
+
+.other-results-title {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.other-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.other-result-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
+  transition: background 0.2s;
+}
+
+.other-result-item:active {
+  background: #f0f0f0;
+}
+
+.other-result-icon {
+  font-size: 48rpx;
+  margin-right: 20rpx;
+}
+
+.other-result-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.other-result-name {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.other-result-tag {
+  display: inline-block;
+  color: #fff;
+  padding: 4rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
+  align-self: flex-start;
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+.no-result {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.no-result-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.no-result-text {
+  display: block;
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 30rpx;
+}
+
+/* 录音控制 */
+.record-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.record-btn {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #07c160 0%, #05a050 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 30rpx rgba(7, 193, 96, 0.4);
+  transition: all 0.2s;
+}
+
+.record-btn.recording {
+  background: #fa5151;
+  box-shadow: 0 8rpx 30rpx rgba(250, 81, 81, 0.4);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.record-btn-icon {
+  font-size: 72rpx;
+}
+
+.record-hint {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 其他选项 */
+.other-options {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.option-link {
+  font-size: 28rpx;
+  color: #07c160;
+}
+
+/* 提示 */
+.tips-card {
+  background: rgba(7, 193, 96, 0.05);
+  border: 2rpx solid rgba(7, 193, 96, 0.1);
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.tips-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #07c160;
+  margin-bottom: 16rpx;
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.tip-item {
+  font-size: 26rpx;
+  color: #666;
+}

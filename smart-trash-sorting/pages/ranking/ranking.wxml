@@ -1,0 +1,101 @@
+<!--pages/ranking/ranking.wxml-->
+<view class="container">
+  <!-- 我的排名卡片 -->
+  <view class="my-rank-card" wx:if="{{myRank}}">
+    <view class="rank-title">我的排名</view>
+    <view class="rank-stats">
+      <view class="rank-stat-item">
+        <text class="rank-num">{{myRank.pointsRank}}</text>
+        <text class="rank-label">积分榜</text>
+      </view>
+      <view class="rank-stat-item">
+        <text class="rank-num">{{myRank.identifyRank}}</text>
+        <text class="rank-label">识别榜</text>
+      </view>
+      <view class="rank-stat-item">
+        <text class="rank-num">{{myRank.checkinRank}}</text>
+        <text class="rank-label">打卡榜</text>
+      </view>
+      <view class="rank-stat-item">
+        <text class="rank-num total">{{myRank.totalUsers}}</text>
+        <text class="rank-label">总人数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Tab切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.id ? 'active' : ''}}" 
+          wx:for="{{tabs}}" 
+          wx:key="id"
+          data-tab="{{item.id}}"
+          bindtap="switchTab">
+      {{item.name}}
+    </view>
+  </view>
+
+  <!-- 排行榜列表 -->
+  <scroll-view class="rank-content" scroll-y wx:if="{{activeTab !== 'achievements'}}">
+    <view class="rank-list" wx:if="{{rankList.length > 0}}">
+      <view class="rank-item {{item.isMe ? 'is-me' : ''}} {{item.rankIndex <= 3 ? 'top-three' : ''}}" 
+            wx:for="{{rankList}}" wx:key="id">
+        <view class="rank-index {{item.rankIndex <= 3 ? 'top' : ''}}">
+          <text wx:if="{{item.rankIndex === 1}}">🥇</text>
+          <text wx:elif="{{item.rankIndex === 2}}">🥈</text>
+          <text wx:elif="{{item.rankIndex === 3}}">🥉</text>
+          <text wx:else>{{item.rankIndex}}</text>
+        </view>
+        <image class="rank-avatar" src="{{item.avatarUrl || '/static/images/default-avatar.png'}}" />
+        <view class="rank-info">
+          <view class="rank-name-row">
+            <text class="rank-nickname">{{item.nickname || '环保用户'}}</text>
+            <text class="rank-level" wx:if="{{item.level}}">{{item.level.icon}} {{item.level.name}}</text>
+          </view>
+          <view class="rank-detail">
+            <text wx:if="{{activeTab === 'points'}}">积分: {{item.totalPoints}}</text>
+            <text wx:elif="{{activeTab === 'identify'}}">识别: {{item.identifyCount}}次</text>
+            <text wx:elif="{{activeTab === 'checkin'}}">连续打卡: {{item.checkInDays}}天</text>
+          </view>
+        </view>
+        <view class="rank-value">
+          <text wx:if="{{activeTab === 'points'}}">{{item.totalPoints}}</text>
+          <text wx:elif="{{activeTab === 'identify'}}">{{item.identifyCount}}</text>
+          <text wx:elif="{{activeTab === 'checkin'}}">{{item.checkInDays}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">🏆</text>
+      <text class="empty-text">暂无排行数据</text>
+    </view>
+  </scroll-view>
+
+  <!-- 成就列表 -->
+  <scroll-view class="rank-content" scroll-y wx:if="{{activeTab === 'achievements'}}">
+    <view class="achievement-list" wx:if="{{achievements.length > 0}}">
+      <view class="achievement-item {{item.achieved ? 'achieved' : ''}} {{item.progress >= 100 && !item.achieved ? 'claimable' : ''}}" 
+            wx:for="{{achievements}}" wx:key="id" 
+            bindtap="claimAchievement" data-item="{{item}}">
+        <view class="achievement-icon">{{item.icon}}</view>
+        <view class="achievement-info">
+          <text class="achievement-name">{{item.name}}</text>
+          <text class="achievement-desc">{{item.description}}</text>
+          <view class="achievement-progress">
+            <view class="progress-bar">
+              <view class="progress-fill" style="width: {{item.progress}}%"></view>
+            </view>
+            <text class="progress-text">{{item.currentValue}}/{{item.conditionValue}}</text>
+          </view>
+        </view>
+        <view class="achievement-reward">
+          <text class="reward-points" wx:if="{{!item.achieved}}">+{{item.pointsReward}}</text>
+          <text class="reward-claimed" wx:else>已领取</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-state" wx:else>
+      <text class="empty-icon">🏆</text>
+      <text class="empty-text">请先登录查看成就</text>
+    </view>
+  </scroll-view>
+</view>

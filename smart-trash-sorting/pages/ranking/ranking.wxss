@@ -1,0 +1,280 @@
+/* pages/ranking/ranking.wxss */
+.container {
+  padding: 20rpx;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 我的排名卡片 */
+.my-rank-card {
+  background: linear-gradient(135deg, #07c160, #06ad56);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  color: #fff;
+}
+
+.rank-title {
+  font-size: 28rpx;
+  opacity: 0.9;
+  margin-bottom: 20rpx;
+}
+
+.rank-stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.rank-stat-item {
+  text-align: center;
+}
+
+.rank-num {
+  display: block;
+  font-size: 44rpx;
+  font-weight: bold;
+}
+
+.rank-num.total {
+  font-size: 36rpx;
+  opacity: 0.8;
+}
+
+.rank-label {
+  display: block;
+  font-size: 22rpx;
+  opacity: 0.8;
+  margin-top: 8rpx;
+}
+
+/* Tab栏 */
+.tab-bar {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 26rpx;
+  color: #666;
+  border-radius: 12rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: #07c160;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* 排行榜内容区 */
+.rank-content {
+  height: calc(100vh - 360rpx);
+}
+
+/* 排行列表 */
+.rank-list {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.rank-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: background 0.2s;
+}
+
+.rank-item.is-me {
+  background: #e8f8ee;
+}
+
+.rank-item.top-three {
+  background: linear-gradient(90deg, #fffbeb 0%, #fff 100%);
+}
+
+.rank-index {
+  width: 60rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #999;
+  font-weight: bold;
+}
+
+.rank-index.top {
+  font-size: 40rpx;
+}
+
+.rank-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  margin: 0 16rpx;
+  border: 2rpx solid #eee;
+}
+
+.rank-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.rank-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.rank-nickname {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  max-width: 200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-level {
+  font-size: 20rpx;
+  color: #07c160;
+  background: #e8f8ee;
+  padding: 2rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.rank-detail {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.rank-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #07c160;
+  min-width: 100rpx;
+  text-align: right;
+}
+
+/* 成就列表 */
+.achievement-list {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  opacity: 0.6;
+}
+
+.achievement-item.achieved {
+  opacity: 1;
+  background: #f0fff4;
+}
+
+.achievement-item.claimable {
+  opacity: 1;
+  background: #fffbeb;
+}
+
+.achievement-icon {
+  font-size: 48rpx;
+  width: 80rpx;
+  text-align: center;
+}
+
+.achievement-info {
+  flex: 1;
+  margin: 0 16rpx;
+}
+
+.achievement-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.achievement-desc {
+  display: block;
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.achievement-progress {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+  gap: 12rpx;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 12rpx;
+  background: #e8e8e8;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #07c160, #06ad56);
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+.progress-text {
+  font-size: 20rpx;
+  color: #999;
+  min-width: 80rpx;
+  text-align: right;
+}
+
+.achievement-reward {
+  text-align: center;
+  min-width: 80rpx;
+}
+
+.reward-points {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #ff9500;
+}
+
+.reward-claimed {
+  font-size: 22rpx;
+  color: #07c160;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  background: #fff;
+  border-radius: 16rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

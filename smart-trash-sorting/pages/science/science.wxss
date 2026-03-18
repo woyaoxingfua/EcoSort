@@ -1,0 +1,347 @@
+/* pages/science/science.wxss */
+
+.tab-bar {
+  display: flex;
+  background: #fff;
+  padding: 20rpx;
+  margin: -20rpx -20rpx 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  font-size: 30rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab-item.active {
+  color: #07c160;
+  font-weight: 600;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background: #07c160;
+  border-radius: 2rpx;
+}
+
+.content-list {
+  flex: 1;
+  background: #fff;
+  margin: 0 -20rpx;
+  padding: 20rpx;
+}
+
+/* 分类卡片 */
+.type-card {
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.type-header {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-left: 8rpx solid;
+}
+
+.type-icon-large {
+  font-size: 64rpx;
+  margin-right: 24rpx;
+}
+
+.type-info {
+  flex: 1;
+}
+
+.type-name-large {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.type-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+.expand-icon {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+.type-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  padding: 20rpx 30rpx;
+  background: #f8f9fa;
+}
+
+.preview-tag {
+  font-size: 24rpx;
+  color: #666;
+  background: #e8e8e8;
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+}
+
+/* 指南卡片 */
+.guide-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  color: #fff;
+  margin-top: 20rpx;
+}
+
+.guide-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.guide-item {
+  display: flex;
+  align-items: center;
+}
+
+.guide-num {
+  width: 40rpx;
+  height: 40rpx;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.guide-text {
+  font-size: 28rpx;
+}
+
+/* 误区卡片 */
+.mistake-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.mistake-icon {
+  font-size: 56rpx;
+  margin-right: 24rpx;
+}
+
+.mistake-content {
+  flex: 1;
+}
+
+.mistake-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.mistake-summary {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.mistake-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+/* 新闻卡片 */
+.news-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.news-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+}
+
+.news-summary {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+}
+
+.news-meta {
+  display: flex;
+  gap: 20rpx;
+}
+
+.news-source, .news-date {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 详情弹窗 */
+.detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+.detail-content {
+  width: 100%;
+  height: 70%;
+  background: #fff;
+  border-radius: 32rpx 32rpx 0 0;
+  border-top: 8rpx solid;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  padding: 40rpx;
+}
+
+.detail-icon {
+  font-size: 64rpx;
+  margin-right: 20rpx;
+}
+
+.detail-title {
+  flex: 1;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.detail-close {
+  font-size: 40rpx;
+  color: #999;
+  padding: 10rpx;
+}
+
+.detail-body {
+  flex: 1;
+  padding: 0 40rpx 40rpx;
+}
+
+.detail-section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.section-content {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20rpx;
+}
+
+.example-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.example-icon {
+  font-size: 48rpx;
+  margin-bottom: 8rpx;
+}
+
+.example-name {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.tip-tag {
+  display: inline-block;
+  background: #e8f5e9;
+  color: #07c160;
+  padding: 16rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+/* 更多分类知识区域标签 */
+.section-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin: 30rpx 0 16rpx;
+  padding-left: 16rpx;
+  border-left: 6rpx solid #07c160;
+}

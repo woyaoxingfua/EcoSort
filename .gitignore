@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# WeChat mini-program private config
+project.private.config.json
+
+# Backup directories
+**/backup_before_*/
+
+# Zip archives
+*.zip
+
+# Database backups
+db_backups/
+
+# Uploads
+smart-trash-sorting-server/uploads/*
+!smart-trash-sorting-server/uploads/.gitkeep
+
+# Report generation temp files
+*.docx
+~$*.docx
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Unrelated projects
+MYEXPRESS/
+myexpress3_5/
+
+# Utility scripts (not part of main project)
+gen_report.js
+run_report.bat
+v.py
+verify_report.py
+drawio_initial.json
+
+# Design artifacts
+chen_er_diagram.png
+er_step1.png

@@ -1,0 +1,76 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/identify/identify",
+    "pages/search/search",
+    "pages/scan/scan",
+    "pages/voicerecord/voicerecord",
+    "pages/navigation/navigation",
+    "pages/points/points",
+    "pages/exchange/exchange",
+    "pages/science/science",
+    "pages/ranking/ranking",
+    "pages/enterprise/enterprise",
+    "pages/adminEnterprise/adminEnterprise",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "智能垃圾分类",
+    "navigationBarBackgroundColor": "#07c160",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#07c160",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/images/home.png",
+        "selectedIconPath": "static/images/home-active.png"
+      },
+      {
+        "pagePath": "pages/identify/identify",
+        "text": "识别",
+        "iconPath": "static/images/camera.png",
+        "selectedIconPath": "static/images/camera-active.png"
+      },
+      {
+        "pagePath": "pages/navigation/navigation",
+        "text": "导航",
+        "iconPath": "static/images/map.png",
+        "selectedIconPath": "static/images/map-active.png"
+      },
+      {
+        "pagePath": "pages/points/points",
+        "text": "积分",
+        "iconPath": "static/images/points.png",
+        "selectedIconPath": "static/images/points-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "static/images/profile.png",
+        "selectedIconPath": "static/images/profile-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ],
+  "useExtendedLib": {
+    "weui": true
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

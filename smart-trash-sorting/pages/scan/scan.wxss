@@ -1,0 +1,234 @@
+/* pages/scan/scan.wxss */
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  height: 600rpx;
+  background: #000;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+}
+
+.preview-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ddd;
+  gap: 12rpx;
+}
+
+.preview-fallback-icon {
+  font-size: 80rpx;
+}
+
+.preview-fallback-text {
+  font-size: 26rpx;
+}
+
+.analyzing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: #07c160;
+  box-shadow: 0 0 20rpx #07c160;
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+.analyzing-text {
+  color: #fff;
+  font-size: 36rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-icon {
+  font-size: 80rpx;
+  animation: rotate 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 结果卡片 */
+.result-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50rpx); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.result-icon {
+  font-size: 80rpx;
+  margin-right: 24rpx;
+}
+
+.result-info {
+  flex: 1;
+}
+
+.result-name {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.result-confidence {
+  display: block;
+  font-size: 26rpx;
+  color: #07c160;
+  margin-top: 8rpx;
+}
+
+.result-type {
+  padding: 30rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid;
+  margin-bottom: 30rpx;
+}
+
+.type-tag {
+  display: inline-block;
+  color: #fff;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  margin-bottom: 16rpx;
+}
+
+.type-tips {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.result-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.result-actions .btn {
+  flex: 1;
+}
+
+/* 操作栏 */
+.action-bar {
+  display: flex;
+  gap: 30rpx;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.action-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+}
+
+/* 说明 */
+.intro-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  text-align: center;
+}
+
+.intro-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 40rpx;
+}
+
+.intro-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-num {
+  width: 60rpx;
+  height: 60rpx;
+  background: #07c160;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.step-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.step-arrow {
+  font-size: 36rpx;
+  color: #ccc;
+  margin: 0 20rpx;
+  padding-bottom: 40rpx;
+}

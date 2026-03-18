@@ -1,0 +1,224 @@
+/* pages/identify/identify.wxss */
+
+.tab-bar {
+  display: flex;
+  background: #fff;
+  padding: 20rpx;
+  margin: -20rpx -20rpx 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: rgba(7, 193, 96, 0.1);
+}
+
+.tab-icon {
+  font-size: 48rpx;
+  margin-bottom: 8rpx;
+}
+
+.tab-name {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.tab-item.active .tab-name {
+  color: #07c160;
+  font-weight: 600;
+}
+
+/* 选项 */
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+}
+
+.option-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  margin-right: 24rpx;
+}
+
+.option-icon.primary {
+  background: rgba(7, 193, 96, 0.1);
+}
+
+.option-icon.secondary {
+  background: rgba(16, 174, 255, 0.1);
+}
+
+.option-content {
+  flex: 1;
+}
+
+.option-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.option-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.option-arrow {
+  color: #ccc;
+  font-size: 36rpx;
+}
+
+/* 历史记录 */
+.history-card .card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clear-btn {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.history-list {
+  border-top: 2rpx solid #f0f0f0;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: #f5f5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.history-info {
+  flex: 1;
+}
+
+.history-name {
+  display: block;
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.history-tag {
+  display: inline-block;
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  color: #fff;
+}
+
+.history-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 提示 */
+.tips-card {
+  background: rgba(7, 193, 96, 0.05);
+  border: 2rpx solid rgba(7, 193, 96, 0.1);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-top: 20rpx;
+}
+
+.tips-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #07c160;
+  margin-bottom: 16rpx;
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.tip-item {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 动态历史记录新增样式 */
+.empty-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+}
+
+.empty-history .empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-history .empty-text {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.empty-history .empty-hint {
+  font-size: 26rpx;
+  color: #bbb;
+}
+
+.history-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 100rpx;
+}
+
+.history-confidence {
+  font-size: 22rpx;
+  color: #07c160;
+  font-weight: 500;
+  margin-bottom: 4rpx;
+}
+
+/* 加载状态 */
+.loading-tip {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}

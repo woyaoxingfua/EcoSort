@@ -1,0 +1,121 @@
+<!--pages/science/science.wxml-->
+<view class="container">
+  <!-- 标签切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.id ? 'active' : ''}}" 
+          wx:for="{{tabs}}" 
+          wx:key="id"
+          data-tab="{{item.id}}"
+          bindtap="switchTab">
+      {{item.name}}
+    </view>
+  </view>
+
+  <!-- 分类知识 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'types'}}">
+    <view class="type-card" wx:for="{{trashTypes}}" wx:key="name" bindtap="expandType" data-index="{{index}}">
+      <view class="type-header" style="background: {{item.color}}10; border-left-color: {{item.color}}">
+        <text class="type-icon-large">{{item.icon}}</text>
+        <view class="type-info">
+          <text class="type-name-large" style="color: {{item.color}}">{{item.name}}</text>
+          <text class="type-desc">{{item.desc}}</text>
+        </view>
+        <text class="expand-icon">></text>
+      </view>
+      <view class="type-preview">
+        <text class="preview-tag" wx:for="{{item.items}}" wx:for-item="itemName" wx:key="itemName">{{itemName}}</text>
+      </view>
+    </view>
+
+    <!-- 数据库加载的分类知识文章 -->
+    <view wx:if="{{knowledgeList.length > 0}}">
+      <view class="section-label">更多分类知识</view>
+      <view class="news-card" wx:for="{{knowledgeList}}" wx:key="id" bindtap="viewKnowledge" data-item="{{item}}">
+        <text class="news-title">{{item.title}}</text>
+        <text class="news-summary">{{item.summary}}</text>
+      </view>
+    </view>
+
+    <!-- 分类指南卡片 -->
+    <view class="guide-card">
+      <view class="guide-title">📋 分类投放指南</view>
+      <view class="guide-list">
+        <view class="guide-item">
+          <text class="guide-num">1</text>
+          <text class="guide-text">先判断是否属于有害垃圾</text>
+        </view>
+        <view class="guide-item">
+          <text class="guide-num">2</text>
+          <text class="guide-text">判断是否可回收（纸、塑、玻、金、纺）</text>
+        </view>
+        <view class="guide-item">
+          <text class="guide-num">3</text>
+          <text class="guide-text">判断是否易腐烂（食物残渣等）</text>
+        </view>
+        <view class="guide-item">
+          <text class="guide-num">4</text>
+          <text class="guide-text">以上都不是，投入其他垃圾</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 常见误区 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'mistakes'}}">
+    <view class="mistake-card" wx:for="{{mistakes}}" wx:key="id" bindtap="viewMistake" data-item="{{item}}">
+      <text class="mistake-icon">{{item.icon}}</text>
+      <view class="mistake-content">
+        <text class="mistake-title">{{item.title}}</text>
+        <text class="mistake-summary">{{item.content.substring(0, 40)}}...</text>
+      </view>
+      <text class="mistake-arrow">></text>
+    </view>
+  </scroll-view>
+
+  <!-- 环保资讯 -->
+  <scroll-view class="content-list" scroll-y wx:if="{{activeTab === 'news'}}">
+    <view class="news-card" wx:for="{{newsList}}" wx:key="id" bindtap="viewNews" data-item="{{item}}">
+      <text class="news-title">{{item.title}}</text>
+      <text class="news-summary">{{item.summary}}</text>
+      <view class="news-meta">
+        <text class="news-source">{{item.source}}</text>
+        <text class="news-date">{{item.date}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 分类详情弹窗 -->
+  <view class="detail-modal" wx:if="{{selectedType}}" bindtap="closeDetail">
+    <view class="detail-content" catchtap="preventClose" style="border-top-color: {{selectedType.color}}">
+      <view class="detail-header" style="background: {{selectedType.color}}10">
+        <text class="detail-icon">{{selectedType.icon}}</text>
+        <text class="detail-title" style="color: {{selectedType.color}}">{{selectedType.name}}</text>
+        <text class="detail-close" bindtap="closeDetail">✕</text>
+      </view>
+      
+      <scroll-view class="detail-body" scroll-y>
+        <view class="detail-section">
+          <text class="section-title">定义说明</text>
+          <text class="section-content">{{selectedType.desc}}</text>
+        </view>
+        
+        <view class="detail-section">
+          <text class="section-title">常见物品</text>
+          <view class="example-grid">
+            <view class="example-item" wx:for="{{selectedType.examples}}" wx:key="name">
+              <text class="example-icon">{{item.icon}}</text>
+              <text class="example-name">{{item.name}}</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="detail-section">
+          <text class="section-title">投放提示</text>
+          <view class="tips-list">
+            <text class="tip-tag" wx:for="{{selectedType.tips}}" wx:key="*this">{{item}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

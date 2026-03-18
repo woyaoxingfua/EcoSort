@@ -1,0 +1,74 @@
+<!--pages/scan/scan.wxml-->
+<view class="container">
+  <!-- 图片预览区 -->
+  <view class="image-preview" wx:if="{{imagePath}}">
+    <image class="preview-img" wx:if="{{!previewLoadFailed}}" src="{{imagePath}}" mode="aspectFit" binderror="onPreviewError" />
+    <view class="preview-fallback" wx:else>
+      <text class="preview-fallback-icon">🖼️</text>
+      <text class="preview-fallback-text">图片预览失败，但仍可进行识别</text>
+    </view>
+    
+    <!-- 识别中动画 -->
+    <view class="analyzing-overlay" wx:if="{{isAnalyzing}}">
+      <view class="scan-line"></view>
+      <view class="analyzing-text">
+        <text class="loading-icon">🔄</text>
+        <text>AI识别中...</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 识别结果 -->
+  <view class="result-card" wx:if="{{showResult && result}}">
+    <view class="result-header">
+      <text class="result-icon">{{result.icon}}</text>
+      <view class="result-info">
+        <text class="result-name">{{result.name}}</text>
+        <text class="result-confidence">置信度 {{result.confidence}}%</text>
+      </view>
+    </view>
+    
+    <view class="result-type" style="background: {{result.color}}20; border-color: {{result.color}}">
+      <text class="type-tag" style="background: {{result.color}}">{{result.typeName}}</text>
+      <text class="type-tips">{{result.tips}}</text>
+    </view>
+
+    <view class="result-actions">
+      <button class="btn btn-primary" bindtap="viewDetail">查看详情</button>
+      <button class="btn btn-outline" bindtap="feedbackError">识别有误？</button>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-bar" wx:if="{{!isAnalyzing}}">
+    <view class="action-btn" bindtap="retake">
+      <text class="action-icon">📷</text>
+      <text>重新拍照</text>
+    </view>
+    <view class="action-btn" bindtap="goBack">
+      <text class="action-icon">🏠</text>
+      <text>返回首页</text>
+    </view>
+  </view>
+
+  <!-- 识别说明 -->
+  <view class="intro-card" wx:if="{{!imagePath}}">
+    <text class="intro-title">拍照识别垃圾</text>
+    <view class="intro-steps">
+      <view class="step">
+        <text class="step-num">1</text>
+        <text class="step-text">对准垃圾物品</text>
+      </view>
+      <view class="step-arrow">→</view>
+      <view class="step">
+        <text class="step-num">2</text>
+        <text class="step-text">点击拍照按钮</text>
+      </view>
+      <view class="step-arrow">→</view>
+      <view class="step">
+        <text class="step-num">3</text>
+        <text class="step-text">查看识别结果</text>
+      </view>
+    </view>
+  </view>
+</view>

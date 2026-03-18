@@ -1,0 +1,91 @@
+<!--pages/voicerecord/voicerecord.wxml-->
+<view class="container">
+  <!-- 录音界面 -->
+  <view class="record-section">
+    <view class="voice-wave" wx:if="{{isRecording}}">
+      <view class="wave-bar" wx:for="{{waveAnimation}}" wx:key="index" style="height: {{item * 200}}rpx; animation-delay: {{index * 0.05}}s"></view>
+    </view>
+    
+    <view class="voice-icon" wx:else>🎤</view>
+    
+    <text class="record-tip">{{isRecording ? '正在聆听...' : '按住下方按钮说话'}}</text>
+    <text class="record-time" wx:if="{{isRecording}}">{{recordingTime}}s</text>
+  </view>
+
+  <!-- 识别结果 -->
+  <view class="result-card" wx:if="{{showResult}}">
+    <view class="voice-text-section">
+      <text class="section-label">识别内容：</text>
+      <text class="voice-text">{{voiceText}}</text>
+    </view>
+    
+    <view class="search-result" wx:if="{{result}}">
+      <!-- 主结果 -->
+      <view class="result-header">
+        <text class="result-icon">{{result.icon}}</text>
+        <view class="result-info">
+          <text class="result-name">{{result.name}}</text>
+          <text class="result-tag" style="background: {{result.color}}">{{result.typeName}}</text>
+        </view>
+      </view>
+      <text class="result-tips">{{result.tips}}</text>
+      
+      <!-- 其他相关结果 -->
+      <view class="other-results" wx:if="{{results.length > 1}}">
+        <text class="other-results-title">相关结果：</text>
+        <view class="other-results-list">
+          <view class="other-result-item" wx:for="{{results}}" wx:key="id" wx:if="{{index > 0}}" bindtap="onSelectResult" data-item="{{item}}">
+            <text class="other-result-icon">{{item.icon}}</text>
+            <view class="other-result-info">
+              <text class="other-result-name">{{item.name}}</text>
+              <text class="other-result-tag" style="background: {{item.color}}">{{item.typeName}}</text>
+            </view>
+            <text class="arrow">></text>
+          </view>
+        </view>
+      </view>
+      
+      <button class="btn btn-primary" bindtap="viewDetail">查看详情</button>
+    </view>
+    
+    <view class="no-result" wx:else>
+      <text class="no-result-icon">🤔</text>
+      <text class="no-result-text">未找到相关结果</text>
+      <button class="btn btn-outline" bindtap="feedback">反馈</button>
+    </view>
+  </view>
+
+  <!-- 录音按钮 -->
+  <view class="record-controls">
+    <button 
+      class="record-btn {{isRecording ? 'recording' : ''}}"
+      bindtouchstart="startRecording"
+      bindtouchend="stopRecording"
+      bindtouchcancel="stopRecording"
+    >
+      <text class="record-btn-icon">{{isRecording ? '⏹' : '🎙'}}</text>
+    </button>
+    <text class="record-hint">{{isRecording ? '松开结束' : '按住说话'}}</text>
+  </view>
+
+  <!-- 其他选项 -->
+  <view class="other-options" wx:if="{{!isRecording && !showResult}}">
+    <text class="option-link" bindtap="manualInput">切换文字搜索 ></text>
+  </view>
+
+  <!-- 重新录音 -->
+  <view class="other-options" wx:if="{{showResult}}">
+    <text class="option-link" bindtap="reRecord">重新录音 ></text>
+  </view>
+
+  <!-- 使用说明 -->
+  <view class="tips-card">
+    <view class="tips-title">💡 使用说明</view>
+    <view class="tips-list">
+      <text class="tip-item">1. 按住麦克风按钮开始录音</text>
+      <text class="tip-item">2. 清晰说出垃圾名称</text>
+      <text class="tip-item">3. 松开后自动识别并搜索</text>
+      <text class="tip-item">4. 查看识别结果和分类信息</text>
+    </view>
+  </view>
+</view>

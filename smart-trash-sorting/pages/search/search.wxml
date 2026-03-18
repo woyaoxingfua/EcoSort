@@ -1,0 +1,87 @@
+<!--pages/search/search.wxml-->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="输入垃圾名称，如：电池、塑料瓶..."
+        value="{{keyword}}"
+        bindinput="onInput"
+        confirm-type="search"
+        bindconfirm="onSearch"
+      />
+      <text class="clear-icon" wx:if="{{keyword}}" bindtap="clearSearch">✕</text>
+    </view>
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view class="result-section" wx:if="{{hasSearched}}">
+    <view class="section-title">搜索结果（{{searchResults.length}}）</view>
+    
+    <view class="result-list" wx:if="{{searchResults.length > 0}}">
+      <view class="result-item" wx:for="{{searchResults}}" wx:key="name" bindtap="viewDetail" data-item="{{item}}">
+        <text class="result-icon">{{item.icon}}</text>
+        <view class="result-content">
+          <text class="result-name">{{item.name}}</text>
+          <text class="result-tips">{{item.tips}}</text>
+        </view>
+        <text class="result-tag tag-{{item.type}}">{{item.typeName}}</text>
+      </view>
+    </view>
+
+    <view class="empty-result" wx:else>
+      <text class="empty-icon">😕</text>
+      <text class="empty-text">未找到"{{keyword}}"相关结果</text>
+      <button class="feedback-btn" bindtap="feedback">反馈该垃圾</button>
+    </view>
+  </view>
+
+  <!-- 热门搜索 -->
+  <view class="card" wx:if="{{!hasSearched}}">
+    <view class="section-title">热门搜索</view>
+    <view class="tag-list">
+      <text class="tag" wx:for="{{hotSearches}}" wx:key="*this" bindtap="onTagTap" data-keyword="{{item}}">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 搜索历史 -->
+  <view class="card" wx:if="{{!hasSearched && searchHistory.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">搜索历史</text>
+      <text class="clear-link" bindtap="clearHistory">清空</text>
+    </view>
+    <view class="tag-list">
+      <text class="tag tag-history" wx:for="{{searchHistory}}" wx:key="*this" bindtap="onTagTap" data-keyword="{{item}}">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 分类速查 -->
+  <view class="card" wx:if="{{!hasSearched}}">
+    <view class="section-title">分类速查</view>
+    <view class="type-grid">
+      <view class="type-item tag-recyclable">
+        <text class="type-icon">♻️</text>
+        <text class="type-name">可回收物</text>
+        <text class="type-examples">纸类、塑料、玻璃、金属</text>
+      </view>
+      <view class="type-item tag-hazardous">
+        <text class="type-icon">☠️</text>
+        <text class="type-name">有害垃圾</text>
+        <text class="type-examples">电池、灯管、药品、油漆</text>
+      </view>
+      <view class="type-item tag-kitchen">
+        <text class="type-icon">🍲</text>
+        <text class="type-name">厨余垃圾</text>
+        <text class="type-examples">剩菜、果皮、蛋壳、茶叶</text>
+      </view>
+      <view class="type-item tag-other">
+        <text class="type-icon">🗑️</text>
+        <text class="type-name">其他垃圾</text>
+        <text class="type-examples">纸巾、烟蒂、尘土</text>
+      </view>
+    </view>
+  </view>
+</view>
