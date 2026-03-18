@@ -64,3 +64,6 @@ er_step1.png
 
 # SQL dumps
 *.sql
+
+# ER diagram artifacts
+docs/

@@ -17,8 +17,7 @@
   <a href="#-技术架构">技术架构</a> •
   <a href="#-快速开始">快速开始</a> •
   <a href="#-api-文档">API 文档</a> •
-  <a href="#-部署指南">部署指南</a> •
-  <a href="#-数据库设计">数据库设计</a>
+  <a href="#-部署指南">部署指南</a>
 </p>
 
 ---
@@ -229,12 +228,6 @@ npm run dev
 > 完整 API 文档见 [smart-trash-sorting-server/README.md](./smart-trash-sorting-server/README.md)
 
 ## 🗃️ 数据库设计
-
-### 陈氏 ER 图
-
-<p align="center">
-  <img src="./docs/er-diagram.svg" alt="EcoSort ER Diagram" width="100%"/>
-</p>
 
 | 表名 | 说明 | 核心字段 |
 |:---|:---|:---|
