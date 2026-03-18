@@ -58,3 +58,6 @@ er_step1.png
 # Root level package files (not part of the project)
 /package.json
 /package-lock.json
+
+# WeChat cloudbase debug
+.cloudbase/

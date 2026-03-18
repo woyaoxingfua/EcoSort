@@ -1,46 +1,54 @@
-# EcoSort Server - 后端服务
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express-4.x-000000?style=flat-square&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-5.7+-4479A1?style=flat-square&logo=mysql&logoColor=white" />
+</p>
 
-基于 Node.js + Express + MySQL 的 RESTful API 服务。
+# EcoSort Server
 
-## 技术栈
+> RESTful API 后端服务
 
-- **运行环境**: Node.js 16+
-- **Web 框架**: Express 4.x
-- **数据库**: MySQL 5.7+
-- **认证**: JWT
-- **AI 服务**: SiliconFlow API
+## 🛠️ 技术栈
 
-## 项目结构
+| 技术 | 版本 | 用途 |
+|:---:|:---:|:---|
+| Node.js | 18+ | 运行环境 |
+| Express | 4.x | Web 框架 |
+| MySQL | 5.7+ | 数据存储 |
+| JWT | - | 身份认证 |
+| SiliconFlow | - | AI 图像识别 |
+
+## 📁 项目结构
 
 ```
 smart-trash-sorting-server/
 ├── config/
-│   ├── database.js       # 数据库连接
-│   └── constants.js      # 常量配置
+│   ├── database.js          # 数据库连接池
+│   └── constants.js         # 常量配置
 ├── routes/
-│   ├── trash.js          # 垃圾分类
-│   ├── user.js           # 用户管理
-│   ├── points.js         # 积分系统
-│   ├── recycle.js        # 回收点
-│   ├── news.js           # 资讯管理
-│   ├── enterprise.js     # 企业端
-│   ├── voice.js          # 语音识别
-│   └── upload.js         # 文件上传
+│   ├── trash.js             # 垃圾分类 API
+│   ├── user.js              # 用户管理 API
+│   ├── points.js            # 积分系统 API
+│   ├── recycle.js           # 回收点 API
+│   ├── news.js              # 资讯管理 API
+│   ├── enterprise.js        # 企业端 API
+│   ├── voice.js             # 语音识别 API
+│   └── upload.js            # 文件上传 API
 ├── services/
-│   ├── aiIdentify.js     # AI 图像识别
-│   ├── aiContent.js      # AI 内容生成
-│   └── speechToText.js   # 语音转文字
+│   ├── aiIdentify.js        # AI 图像识别
+│   ├── aiContent.js         # AI 内容生成
+│   └── speechToText.js      # 语音转文字
 ├── utils/
-│   ├── auth.js           # JWT 认证
-│   ├── admin.js          # 管理员校验
-│   └── common.js         # 通用工具
+│   ├── auth.js              # JWT 认证中间件
+│   ├── admin.js             # 管理员校验
+│   └── common.js            # 通用工具函数
 ├── scripts/
-│   └── initDatabase.js   # 数据库初始化
-├── app.js                # 入口文件
-└── .env.example          # 环境变量示例
+│   └── initDatabase.js      # 数据库初始化
+├── app.js                   # 应用入口
+└── .env.example             # 环境变量模板
 ```
 
-## 快速开始
+## 🚀 快速开始
 
 ### 1. 安装依赖
 
@@ -48,32 +56,32 @@ smart-trash-sorting-server/
 npm install
 ```
 
-### 2. 配置环境变量
+### 2. 环境配置
 
 ```bash
 cp .env.example .env
 ```
 
-编辑 `.env` 文件：
+编辑 `.env`：
 
-```bash
-# 数据库
+```ini
+# ========== 数据库 ==========
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your_password
 DB_NAME=smart_trash_sorting
 
-# JWT
-JWT_SECRET=your_secret_key
+# ========== JWT ==========
+JWT_SECRET=your_jwt_secret_key
 
-# 微信小程序
+# ========== 微信小程序 ==========
 WECHAT_APPID=your_appid
 WECHAT_SECRET=your_secret
 WECHAT_DISABLE_MOCK_LOGIN=true
 
-# SiliconFlow AI (可选)
-SILICONFLOW_API_KEY=your_key
+# ========== SiliconFlow AI（可选）==========
+SILICONFLOW_API_KEY=your_api_key
 SILICONFLOW_MODEL=Qwen/Qwen2.5-VL-7B-Instruct
 ```
 
@@ -86,95 +94,111 @@ npm run init-db
 ### 4. 启动服务
 
 ```bash
-# 开发模式
+# 开发环境（热重载）
 npm run dev
 
-# 生产模式
+# 生产环境
 npm start
 ```
 
-服务运行在 `http://localhost:3000`
+> 默认运行在 `http://localhost:3000`
 
-## API 接口
+## 📖 API 接口
 
-### 基础地址
+### Base URL
 
 ```
 http://localhost:3000/api
 ```
 
-### 垃圾分类 `/api/trash`
+---
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/search?keyword=xxx` | 搜索垃圾 |
-| GET | `/categories` | 获取所有分类 |
-| GET | `/type/:type` | 按类型获取 |
-| GET | `/hot?limit=10` | 热门搜索 |
-| POST | `/identify` | AI 图像识别 |
+### 🔍 垃圾分类 `/api/trash`
 
-### 用户 `/api/user`
+| Method | Endpoint | Description |
+|:------:|:---------|:------------|
+| `GET` | `/search?keyword=塑料瓶` | 搜索垃圾分类 |
+| `GET` | `/categories` | 获取四大分类列表 |
+| `GET` | `/type/:type` | 按类型筛选垃圾 |
+| `GET` | `/hot?limit=10` | 热门搜索排行 |
+| `POST` | `/identify` | AI 图像识别 |
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| POST | `/login` | 微信登录 |
-| GET | `/:id` | 获取用户信息 |
-| PUT | `/:id` | 更新用户信息 |
-| POST | `/:id/checkin` | 每日打卡 |
-| GET | `/:id/history` | 识别历史 |
-| GET | `/:id/stats` | 统计信息 |
+---
 
-### 积分 `/api/points`
+### 👤 用户管理 `/api/user`
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/records/:userId` | 积分记录 |
-| POST | `/add` | 增加积分 |
-| POST | `/consume` | 消费积分 |
-| GET | `/tasks?userId=xxx` | 任务列表 |
-| POST | `/tasks/complete` | 完成任务 |
-| GET | `/prizes` | 奖品列表 |
-| POST | `/exchange` | 兑换奖品 |
-| GET | `/exchanges/:userId` | 兑换记录 |
+| Method | Endpoint | Description |
+|:------:|:---------|:------------|
+| `POST` | `/login` | 微信授权登录 |
+| `GET` | `/:id` | 获取用户信息 |
+| `PUT` | `/:id` | 更新用户资料 |
+| `POST` | `/:id/checkin` | 每日打卡签到 |
+| `GET` | `/:id/history` | 识别历史记录 |
+| `GET` | `/:id/stats` | 用户统计数据 |
 
-### 回收点 `/api/recycle`
+---
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/nearby?lat=xxx&lng=xxx` | 附近回收点 |
-| GET | `/` | 所有回收点 |
-| GET | `/:id` | 回收点详情 |
+### 🎁 积分系统 `/api/points`
 
-### 资讯 `/api/news`
+| Method | Endpoint | Description |
+|:------:|:---------|:------------|
+| `GET` | `/records/:userId` | 积分变动记录 |
+| `POST` | `/add` | 增加积分 |
+| `POST` | `/consume` | 消费积分 |
+| `GET` | `/tasks?userId=xxx` | 任务列表 |
+| `POST` | `/tasks/complete` | 完成任务 |
+| `GET` | `/prizes` | 奖品列表 |
+| `POST` | `/exchange` | 兑换奖品 |
+| `GET` | `/exchanges/:userId` | 兑换记录 |
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/` | 资讯列表 |
-| GET | `/:id` | 资讯详情 |
-| POST | `/` | 新增资讯 (管理) |
-| PUT | `/:id` | 更新资讯 (管理) |
-| DELETE | `/:id` | 删除资讯 (管理) |
+---
 
-### 企业端 `/api/enterprise`
+### 📍 回收点 `/api/recycle`
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| POST | `/register` | 企业注册 |
-| POST | `/login` | 企业登录 |
-| GET | `/applications` | 申请列表 (管理) |
-| PUT | `/:id/verify` | 审核申请 (管理) |
-| GET | `/:id` | 企业信息 |
-| GET | `/:id/stats` | 统计数据 |
-| POST | `/verify` | 核销积分 |
+| Method | Endpoint | Description |
+|:------:|:---------|:------------|
+| `GET` | `/nearby?lat=xx&lng=xx` | 附近回收点 |
+| `GET` | `/` | 全部回收点 |
+| `GET` | `/:id` | 回收点详情 |
 
-## 数据库表
+---
+
+### 📰 资讯管理 `/api/news`
+
+| Method | Endpoint | Description |
+|:------:|:---------|:------------|
+| `GET` | `/` | 资讯列表 |
+| `GET` | `/:id` | 资讯详情 |
+| `POST` | `/` | 新增资讯 ⚡ |
+| `PUT` | `/:id` | 更新资讯 ⚡ |
+| `DELETE` | `/:id` | 删除资讯 ⚡ |
+
+> ⚡ 需要管理员权限
+
+---
+
+### 🏢 企业端 `/api/enterprise`
+
+| Method | Endpoint | Description |
+|:------:|:---------|:------------|
+| `POST` | `/register` | 企业注册申请 |
+| `POST` | `/login` | 企业登录 |
+| `GET` | `/applications` | 申请列表 ⚡ |
+| `PUT` | `/:id/verify` | 审核申请 ⚡ |
+| `GET` | `/:id` | 企业信息 |
+| `GET` | `/:id/stats` | 统计数据 |
+| `POST` | `/verify` | 积分核销 |
+
+---
+
+## 🗃️ 数据库表
 
 | 表名 | 说明 |
-|------|------|
+|:-----|:-----|
 | `users` | 用户信息 |
-| `trash_categories` | 垃圾分类数据 |
-| `point_records` | 积分记录 |
-| `identify_history` | 识别历史 |
+| `trash_categories` | 垃圾分类数据（100+ 条） |
+| `point_records` | 积分变动记录 |
+| `identify_history` | AI 识别历史 |
 | `user_tasks` | 任务完成记录 |
 | `prizes` | 兑换奖品 |
 | `exchange_records` | 兑换记录 |
@@ -183,47 +207,80 @@ http://localhost:3000/api
 | `verify_records` | 核销记录 |
 | `news` | 环保资讯 |
 
-## 部署
+## 📦 生产部署
 
 ### PM2 部署
 
 ```bash
 npm install -g pm2
-pm2 start app.js --name "ecosort-api"
+
+# 启动服务
+pm2 start app.js --name ecosort-api
+
+# 查看状态
+pm2 status
+
+# 查看日志
 pm2 logs ecosort-api
+
+# 重启服务
+pm2 restart ecosort-api
 ```
 
-### Nginx 配置
+### Nginx 反向代理
 
 ```nginx
+upstream ecosort_api {
+    server 127.0.0.1:3000;
+    keepalive 64;
+}
+
 server {
-    listen 80;
+    listen 443 ssl http2;
     server_name api.example.com;
 
+    ssl_certificate     /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.pem;
+
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://ecosort_api;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Connection "";
     }
 }
 ```
 
-## 常见问题
+## ❓ 常见问题
 
-**Q: 数据库连接失败**
+<details>
+<summary><b>数据库连接失败</b></summary>
+
 - 检查 MySQL 服务是否启动
-- 检查 `.env` 配置是否正确
-- 确保数据库用户有权限
+- 检查 `.env` 中的数据库配置
+- 确认数据库用户权限
 
-**Q: AI 识别不可用**
+</details>
+
+<details>
+<summary><b>AI 识别不可用</b></summary>
+
 - 检查 `SILICONFLOW_API_KEY` 是否配置
 - 确认 API 配额是否充足
+- 检查网络是否能访问 SiliconFlow
 
-**Q: 微信登录失败**
+</details>
+
+<details>
+<summary><b>微信登录失败</b></summary>
+
 - 配置正确的 `WECHAT_APPID` 和 `WECHAT_SECRET`
-- 或设置 `WECHAT_DISABLE_MOCK_LOGIN=false` 使用模拟登录
+- 开发环境可设置 `WECHAT_DISABLE_MOCK_LOGIN=false`
 
-## 许可证
+</details>
 
-MIT License
+## 📄 License
+
+MIT
