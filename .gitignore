@@ -50,3 +50,11 @@ drawio_initial.json
 # Design artifacts
 chen_er_diagram.png
 er_step1.png
+智能垃圾分类_陈氏ER图_设计.md
+
+# Qoder config
+.qoder/
+
+# Root level package files (not part of the project)
+/package.json
+/package-lock.json
